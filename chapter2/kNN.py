@@ -28,12 +28,26 @@ def classify0(inX, dataSet, labels, k):
     key=operator.itemgetter(1), reverse=True)
     #返回逆序排序后的顶部元素，并返回其key，即label
     return sortedClassCount[0][0]
-    
-    
-    
-group, labels = createDataSet()
 
-print classify0([2,2], group, labels, 2)
+def createDatingDataSet(rows):
+    retData = random.rand(rows, 3)
+    retData = retData * 10
+    for i in range(len(retData)):
+        rowData = retData[i]
+        for j in range(len(rowData)):
+            rowData[j] = round(rowData[j], 4)    
+    labels = random.rand(rows)
+    for i in range(len(labels)):
+        labels[i] = int(100*labels[i]) % 3 + 1
+    return retData, labels
+
+
+    
+    
+    
+# group, labels = createDataSet()
+# 
+# print classify0([2,2], group, labels, 2)
 
 # 
 # group, labels = createDataSet()
