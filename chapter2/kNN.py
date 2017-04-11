@@ -41,8 +41,45 @@ def createDatingDataSet(rows):
         labels[i] = int(100*labels[i]) % 3 + 1
     return retData, labels
 
+def file2matrix(filename):                         
+    fr = open(filename)
+    #打开文件，按行读入
+    arrayOLines = fr.readlines()    
+    #获得文件行数 
+    numberOfLines = len(arrayOLines)  
+    #创建m行n列的零矩阵 
+    returnMat = zeros((numberOfLines,3))          
+    classLabelVector = []
+    index = 0
+    for line in arrayOLines:
+        line = line.strip()
+        #删除行前面的空格
+        listFromLine = line.split('\t')
+         #根据分隔符划分
+        returnMat[index,:] = listFromLine[0:3]
+        #取得每一行的内容存起来
+        classLabelVector.append(int(listFromLine[-1]))
+        index += 1
+    return returnMat,classLabelVector
 
-    
+#归一化数据集（将数据等比例缩放至0~1之间的值）
+def autoNorm(dataSet):
+    minValue = dataSet.min(0)
+    maxValue = dataSet.max(0)
+    rangeValue = maxValue - minValue
+    rowNum = dataSet.shape[0];
+    retSet = dataSet - tile(minValue, (rowNum, 1))
+    retSet = retSet / rangeValue
+    return retSet, rangeValue, minValue
+
+dataSet = random.rand(100,3)
+retSet,rangeValue,minValue = autoNorm(dataSet)
+print retSet
+print rangeValue
+print minValue
+# print dataSet
+ 
+
     
     
 # group, labels = createDataSet()
