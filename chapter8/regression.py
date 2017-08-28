@@ -27,6 +27,8 @@ def lwlr(testPoint, xArr, yArr, k=1.0):
 def getGaussWeightMat(fixedPoint, inputPoints, k=1):
     m = shape(inputPoints)[0]#对样本数据的每一个元素进行加权，所以权重对角矩阵的长度肯定是样本数据个数
     gaussWeightMat = mat(eye(m))#权重对角矩阵 参看numpy.eye
+    fixedPoint = mat(fixedPoint)
+    inputPoints = mat(inputPoints)
     for i in range(m):
         diffMat =  fixedPoint - inputPoints[i,:]
         gaussWeightMat[i,i] = exp(diffMat * diffMat.T / (-2 * k ** 2))
@@ -64,6 +66,11 @@ def loadDataSet(fileName):      #general function to parse tab -delimited floats
         dataMat.append(lineArr)
         labelMat.append(float(curLine[-1])) # -1 -> last element
     return dataMat,labelMat
+
+def rssErr(yArr, yHat):
+    diffMat = mat(yArr) - mat(yHat)
+    return diffMat * diffMat.T
+
 
 
 
